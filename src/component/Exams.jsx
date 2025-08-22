@@ -59,7 +59,7 @@ const Exams = () => {
       <div className="mb-4">
         <h4
           className="text-white fw-bold p-2 rounded text-center"
-          style={{ background: "linear-gradient(to right, #6a11cb, #ff0066)" }}
+           style={{ background: "linear-gradient(to right, #6a11cb, #ff0066)" }}
         >
           <i className="bi bi-journal-check me-2" />
           Welcome to the Exams Panel

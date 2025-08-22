@@ -8,7 +8,12 @@ import Questions from "./Questions";
 import Schedule from "./Schedule";
 import AdminRegister from "./AdminRegister";
 import Result from"./Result";
+import { useLocation } from "react-router-dom";
 const AdminDashboard = () => {
+let location=useLocation();
+
+let admin=location.state?.admin;
+console.log(admin);
   return (
     <div className="d-flex">
       {/* Sidebar */}

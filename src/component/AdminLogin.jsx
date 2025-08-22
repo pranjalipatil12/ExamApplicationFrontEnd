@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
+import { Login } from "../service/service";
 
 const AdminLogin = () => {
   const navigate = useNavigate();
@@ -12,12 +13,19 @@ const AdminLogin = () => {
 
   const togglePassword = () => setShowPassword((prev) => !prev);
 
-  const handleLogin = () => {
-    // Simple validation (dummy credentials)
-    if (email === "admin@gmail.com" && password === "admin123") {
-      navigate("/adminhome"); // ✅ Redirect to admin home page
-    } else {
-      alert("Invalid credentials. Try again!");
+  const LoginAdmin = async () => {
+    try {
+      let result = await Login(email, password);
+
+      // ✅ API returns { message, user } → check role here
+      if (result?.user?.role === "admin") {
+        navigate("/adminhome", { state: { admin: result.user } });
+      } else {
+        alert("Invalid credentials. Try again!");
+      }
+    } catch (error) {
+      console.error("Login failed:", error);
+      alert("Something went wrong. Please try again!");
     }
   };
 
@@ -45,7 +53,7 @@ const AdminLogin = () => {
 
         <button
           className="btn btn-danger d-flex align-items-center shadow-sm"
-          onClick={() => navigate("/adminlogin")} // ✅ proper logout
+          onClick={() => navigate("/adminlogin")}
           style={{ borderRadius: "50px" }}
         >
           <i className="bi bi-box-arrow-right me-1"></i> Logout
@@ -68,13 +76,6 @@ const AdminLogin = () => {
             <p style={{ fontSize: "14px", color: "#6a11cb" }}>
               Welcome back, please login to continue
             </p>
-
-            {/* ✅ Dummy Credentials Info */}
-            <div className="alert alert-info p-2 mt-2" style={{ fontSize: "13px" }}>
-              <strong>Demo Credentials:</strong> <br />
-              Email: <code>admin@gmail.com</code> <br />
-              Password: <code>admin123</code>
-            </div>
           </div>
 
           {/* Email */}
@@ -87,7 +88,6 @@ const AdminLogin = () => {
                 type="email"
                 className="form-control"
                 placeholder="Enter your email"
-                name="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
@@ -106,7 +106,6 @@ const AdminLogin = () => {
                 type={showPassword ? "text" : "password"}
                 className="form-control"
                 placeholder="Enter your password"
-                name="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
@@ -143,7 +142,7 @@ const AdminLogin = () => {
                 border: "none",
                 color: "white",
               }}
-              onClick={handleLogin}
+              onClick={LoginAdmin}
             >
               Login
             </button>

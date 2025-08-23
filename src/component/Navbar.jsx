@@ -80,12 +80,7 @@ const Navbar = () => {
               </Link>
             </motion.li>
 
-            {/* Search */}
-            <motion.li className="nav-item px-2" whileHover={{ scale: 1.1 }}>
-              <Link className="nav-link text-white" to="/search" onClick={closeNavbar}>
-                <i className="bi bi-search me-1"></i> Search
-              </Link>
-            </motion.li>
+           
 
             {/* Dropdown Login */}
             <motion.li className="nav-item dropdown px-2" whileHover={{ scale: 1.05 }}>
